@@ -34,7 +34,7 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 //app.use(cors());
 app.use(cors({
-  origin: 'https://54.164.80.165',
+  origin: 'http://54.164.80.165',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));
