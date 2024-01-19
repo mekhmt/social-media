@@ -17,12 +17,15 @@ import { verifyToken } from "./middleware/auth.js";
 import User from "./models/User.js";
 import Post from "./models/Post.js";
 import { users, posts } from "./data/index.js";
-mongoose.set('strictQuery', false);
+
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
+
+import  http from 'http'
+const server = http.createServer(app);
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
@@ -55,7 +58,7 @@ app.use("/posts", postRoutes);
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static(path.join(__dirname,'./client/build')));
   app.get('*',(req,res)=>{
-    res.sendFile(path.resolve(__dirname,'./client/build'))
+    res.sendFile(path.resolve(__dirname,'./client/build/index.html'))
   });
 }
 
@@ -68,7 +71,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+    server.listen(PORT, () => console.log(`Server Port: ${PORT}`));
 
     /* ADD DATA ONE TIME */
     // User.insertMany(users);
